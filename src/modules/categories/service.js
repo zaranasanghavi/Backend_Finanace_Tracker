@@ -44,16 +44,28 @@ exports.updateCategory = async (id, body) => {
 
 };
 
-exports.deleteCategory = async id => {
+exports.deleteCategory = async (id) => {
+  try {
+    const deleted = await repository.deleteCategory(id);
 
- const deleted =
- await repository.deleteCategory(id);
+    if (!deleted) {
+      throw {
+        statusCode: 404,
+        message: "Category not found"
+      };
+    }
 
- if (!deleted)
+    return deleted;
 
-  throw {
-   statusCode: 404,
-   message: "Category not found or already deleted"
-  };
+  } catch (err) {
 
+    if (err.code === "23503") {
+      throw {
+        statusCode: 409, // Conflict
+        message: "Cannot delete category. It is used in financial records."
+      };
+    }
+
+    throw err;
+  }
 };

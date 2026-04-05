@@ -17,7 +17,7 @@ exports.createCategory = async (req,res,next)=>{
  const result =
  await service.createCategory(req.body);
 
- res.json(result);
+ res.status(201).json(result);
 
  }
 

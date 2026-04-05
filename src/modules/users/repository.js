@@ -80,3 +80,15 @@ exports.getMe = async id => {
  return result.rows[0];
 
 };
+
+exports.getUserById = async (id) => {
+  const query = `
+    SELECT id, name, email, role, status
+    FROM users
+    WHERE id = $1
+  `;
+
+  const result = await db.query(query, [id]);
+
+  return result.rows[0]; // undefined if not found
+};

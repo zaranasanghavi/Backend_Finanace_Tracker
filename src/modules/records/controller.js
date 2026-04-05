@@ -23,7 +23,7 @@ exports.createRecord = async (req,res,next)=>{
 
  );
 
- res.json(result);
+ res.status(201).json(result);
 
  }
 

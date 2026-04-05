@@ -1,5 +1,5 @@
 const service = require("./service");
-
+const AppError = require("../../utils/Apperror");
 const {
  roleSchema,
  statusSchema
@@ -104,4 +104,26 @@ async (req, res, next) => {
 
  }
 
+};
+
+const userService = require("./service");
+
+exports.getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const user = await userService.getUserById(id);
+
+    if (!user) {
+        throw new AppError("User not found", 404);
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: user
+    });
+
+  } catch (err) {
+    next(err);
+  }
 };

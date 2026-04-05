@@ -21,7 +21,7 @@ router.post(
 router.get(
  "/",
  authMiddleware,
- rbac("viewer","analyst","admin"),
+ rbac("analyst","admin"),
  controller.getCategories
 );
 

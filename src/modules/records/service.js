@@ -101,7 +101,7 @@ exports.getRecordById = async id => {
  await repository.getRecordById(id);
 
  if (!record)
-  throw Error("Record not found");
+  throw new AppError("Record not found", 404);
 
  return record;
 

@@ -1,5 +1,5 @@
 const repository = require("./repository");
-
+const AppError = require("../../utils/Apperror");
 exports.getUsers = async (page, limit) => {
 
  const offset = (page - 1) * limit;
@@ -34,21 +34,19 @@ exports.getUsers = async (page, limit) => {
 
 
 exports.updateRole = async (id, role) => {
-
- return await repository.updateRole(
-  id,
-  role
- );
-
+  const result = await repository.updateRole(id, role);
+  if (!result) throw new AppError("User not found", 404);
+  return result;
 };
-
 
 exports.updateStatus = async (id, status) => {
 
- return await repository.updateStatus(
+  const result = await repository.updateStatus(
   id,
   status
  );
+ if (!result) throw new AppError("User not found", 404);
+ return result;
 
 };
 
@@ -57,4 +55,11 @@ exports.getMe = async id => {
 
  return await repository.getMe(id);
 
+};
+
+const userRepository = require("./repository");
+
+exports.getUserById = async (id) => {
+  const user = await userRepository.getUserById(id);
+  return user;
 };

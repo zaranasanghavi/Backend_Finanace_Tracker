@@ -17,7 +17,7 @@ exports.register = async (req,res,next)=>{
  const result =
  await service.register(req.body);
 
- res.json(result);
+ res.status(201).json(result);
 
  }
 

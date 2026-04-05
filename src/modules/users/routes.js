@@ -40,5 +40,10 @@ router.get(
  controller.getMe
 );
 
-
+router.get(
+  "/:id",
+  authMiddleware,
+  rbac("admin"), // optional
+  controller.getUserById
+);
 module.exports = router;
